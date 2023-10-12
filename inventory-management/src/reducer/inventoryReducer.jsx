@@ -5,6 +5,7 @@ const initialState = {
     quantity: "",
     price: "",
   },
+  editInventoryItems: false,
 };
 
 export const inventoryReducer = (state = initialState, action) => {
@@ -18,6 +19,11 @@ export const inventoryReducer = (state = initialState, action) => {
       return {
         ...state,
         inventoryInput: action.payload,
+      };
+    case "EDIT_INVENTORY":
+      return {
+        ...state,
+        editInventoryItems: action.payload,
       };
     default:
       return state;

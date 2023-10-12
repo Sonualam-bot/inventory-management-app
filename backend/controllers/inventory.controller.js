@@ -22,10 +22,22 @@ async function getAllItems() {
 async function deleteItem(id) {
   try {
     const deleteSelectedItem = await Inventory.findByIdAndDelete({ _id: id });
-    console.log(deleteSelectedItem);
     return deleteSelectedItem;
   } catch (error) {
     throw error;
+  }
+}
+
+async function updateInventoryItems(itemId, updateData) {
+  try {
+    const updateItem = await Inventory.findByIdAndUpdate(
+      { _id: itemId },
+      updateData,
+      { new: true }
+    );
+    return updateItem;
+  } catch (error) {
+    throw new Error(`${error.message}`);
   }
 }
 
@@ -33,4 +45,5 @@ module.exports = {
   addItem,
   getAllItems,
   deleteItem,
+  updateInventoryItems,
 };

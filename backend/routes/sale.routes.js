@@ -5,6 +5,7 @@ const {
   addingSale,
   getAllSales,
   deletingSales,
+  updateSaleItems,
 } = require("../controllers/sale.controller");
 
 saleRouter.post("/api/sales", async (req, res) => {
@@ -45,6 +46,31 @@ saleRouter.get("/api/sales", async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to fetch sales",
+    });
+  }
+});
+
+saleRouter.post("/api/sales/:saleId", async (req, res) => {
+  try {
+    const saleId = req.params.saleId;
+    const updatedSales = await updateSaleItems(saleId, req.body);
+
+    if (!updatedSales) {
+      res.status(401).json({
+        success: false,
+        message: "Error Fetching Sale Items",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully updated sale item",
+      sale: updatedSales,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to Update Item",
     });
   }
 });

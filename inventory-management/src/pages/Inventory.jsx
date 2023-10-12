@@ -4,6 +4,10 @@ import { InventoryForm } from "../forms/InventoryForm";
 import "../Css/Form.css";
 import { useState } from "react";
 import { getUpdatedInventoryItems } from "../utils/inventory.utils";
+import {
+  editInventory,
+  updateInventoryItems,
+} from "../actions/inventoryAction";
 
 //react icons
 
@@ -12,7 +16,14 @@ export const Inventory = () => {
   const inventoryItemList = useSelector(
     (state) => state.inventoryState.inventoryItems
   );
+
   const dispatch = useDispatch();
+
+  const handleEditInventory = (item) => {
+    setShowInventoryForm(true);
+    dispatch(editInventory(true));
+    dispatch(updateInventoryItems(item));
+  };
 
   return (
     <>
@@ -44,7 +55,7 @@ export const Inventory = () => {
               const totalPrice = item.price * item.quantity;
 
               return (
-                <tr key={index}>
+                <tr key={item._id}>
                   <td>{index + 1}</td>
                   <td>{item.name}</td>
                   <td>{item.price}</td>
@@ -52,7 +63,10 @@ export const Inventory = () => {
                   <td>{totalPrice}</td>
                   <td>
                     <div className="tableBtn">
-                      <span className="material-symbols-outlined">
+                      <span
+                        className="material-symbols-outlined"
+                        onClick={() => handleEditInventory(item)}
+                      >
                         edit_note
                       </span>
                       <span

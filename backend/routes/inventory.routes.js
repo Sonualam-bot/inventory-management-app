@@ -5,6 +5,7 @@ const {
   addItem,
   getAllItems,
   deleteItem,
+  updateInventoryItems,
 } = require("../controllers/inventory.controller");
 
 inventoryRouter.post("/api/items", async (req, res) => {
@@ -43,6 +44,30 @@ inventoryRouter.get("/api/items", async (req, res) => {
     res.status(500).json({
       success: false,
       message: "failed to fetch items",
+    });
+  }
+});
+
+inventoryRouter.post("/api/items/:itemId", async (req, res) => {
+  try {
+    const itemId = req.params.itemId;
+    const updatedItem = await updateInventoryItems(itemId, req.body);
+    if (!updatedItem) {
+      res.status(401).json({
+        success: false,
+        message: "Item not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully updated item",
+      item: updatedItem,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to Update Item",
     });
   }
 });

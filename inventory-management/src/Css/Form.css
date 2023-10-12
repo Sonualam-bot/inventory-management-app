@@ -47,6 +47,10 @@ input {
   border-radius: 3px;
 }
 
+#name{
+  height: 50px;
+}
+
 .commonBtn {
   width: 400px;
   padding: 10px;
@@ -119,6 +123,10 @@ input {
     align-items: center;
     justify-content: center;
     gap: .5rem;
+  }
+
+  .tableBtn > span {
+    cursor: pointer;
   }
 
   /* inventoryTable ends here */

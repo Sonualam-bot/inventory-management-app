@@ -1,11 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import "../Css/Form.css";
-import { updateSaleItems } from "../actions/saleAction";
+import { editSales, updateSaleItems } from "../actions/saleAction";
 import { addItemToSales } from "../services/sale.services";
-import { getAllRecordedSales } from "../utils/sale.utils";
+import {
+  getAllRecordedSales,
+  updateEditedSalesItems,
+} from "../utils/sale.utils";
 
 export const SaleForm = ({ setShowSaleForm }) => {
   const saleInput = useSelector((state) => state.saleState.saleInput);
+
+  const editSaleItems = useSelector((state) => state.saleState.editSaleItems);
+
   const dispatch = useDispatch();
 
   const handleSaleInput = (e) => {
@@ -16,20 +22,35 @@ export const SaleForm = ({ setShowSaleForm }) => {
   const handleSaleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const submit = await addItemToSales(saleInput);
-      if (submit) {
-        getAllRecordedSales(dispatch);
-        dispatch(
-          updateSaleItems({
-            description: "",
-            amount: "",
-          })
-        );
+      if (editSaleItems) {
+        updateEditedSalesItems(dispatch, saleInput);
+      } else {
+        const submit = await addItemToSales(saleInput);
+        if (submit) {
+          getAllRecordedSales(dispatch);
+        }
       }
       setShowSaleForm(false);
+      dispatch(
+        updateSaleItems({
+          description: "",
+          amount: "",
+        })
+      );
     } catch (error) {
       throw new Error(`${error.message}`);
     }
+  };
+
+  const closeSaleModal = () => {
+    setShowSaleForm(false);
+    dispatch(editSales(false));
+    dispatch(
+      updateSaleItems({
+        description: "",
+        price: "",
+      })
+    );
   };
 
   return (
@@ -37,7 +58,7 @@ export const SaleForm = ({ setShowSaleForm }) => {
       <div className="form-container">
         <form className="formDiv" onSubmit={handleSaleFormSubmit}>
           <h2>Add Sales</h2>
-          <label htmlFor="name">Item Name</label>
+          <label htmlFor="name">Enter Description</label>
           <input
             type="text"
             id="name"
@@ -49,6 +70,8 @@ export const SaleForm = ({ setShowSaleForm }) => {
           <label htmlFor="amount">Amount</label>
           <input
             type="number"
+            min="0"
+            // onInput="this.value = Math.abs(this.value)"
             id="amount"
             placeholder="Add Amount"
             onChange={handleSaleInput}
@@ -57,13 +80,9 @@ export const SaleForm = ({ setShowSaleForm }) => {
           />
 
           <button type="submit" className="submitBtn">
-            Submit
+            {editSaleItems ? "Edit" : "Add"}
           </button>
-          <button
-            type="button"
-            className="closebtn"
-            onClick={() => setShowSaleForm(false)}
-          >
+          <button type="button" className="closebtn" onClick={closeSaleModal}>
             Close
           </button>
         </form>

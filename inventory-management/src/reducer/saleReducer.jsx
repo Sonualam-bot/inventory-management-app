@@ -4,6 +4,7 @@ const initialState = {
     description: "",
     amount: "",
   },
+  editSaleItems: false,
 };
 
 export const saleReducer = (state = initialState, action) => {
@@ -17,6 +18,11 @@ export const saleReducer = (state = initialState, action) => {
       return {
         ...state,
         saleInput: action.payload,
+      };
+    case "EDIT_SALES":
+      return {
+        ...state,
+        editSaleItems: action.payload,
       };
     default:
       return state;

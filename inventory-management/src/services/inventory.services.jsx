@@ -39,3 +39,18 @@ export const deleteItemsFromInventory = async (itemId) => {
     throw new Error(`${error.message}`);
   }
 };
+
+export const updateItemsFromInventory = async (item) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/items/${item._id}`,
+      item
+    );
+    if (response.status === 200) {
+      const data = response.data.item;
+      return data;
+    }
+  } catch (error) {
+    throw new Error(`${error.message}`);
+  }
+};

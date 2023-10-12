@@ -37,3 +37,18 @@ export const deleteItemFromSales = async (saleId) => {
     throw new Error(`${error.message}`);
   }
 };
+
+export const updateItemFromSales = async (item) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/sales/${item._id}`,
+      item
+    );
+    if (response.status === 200) {
+      const data = response.data.sale;
+      return data;
+    }
+  } catch (error) {
+    throw new Error(`${error.message}`);
+  }
+};

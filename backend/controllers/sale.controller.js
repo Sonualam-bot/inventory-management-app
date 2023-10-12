@@ -28,8 +28,22 @@ async function deletingSales(saleId) {
   }
 }
 
+async function updateSaleItems(saleId, updateData) {
+  try {
+    const updateSale = await Sale.findByIdAndUpdate(
+      { _id: saleId },
+      updateData,
+      { new: true }
+    );
+    return updateSale;
+  } catch (error) {
+    throw new Error(`${error.message}`);
+  }
+}
+
 module.exports = {
   addingSale,
   getAllSales,
   deletingSales,
+  updateSaleItems,
 };

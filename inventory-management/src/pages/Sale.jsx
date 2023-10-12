@@ -4,14 +4,19 @@ import { SaleForm } from "../forms/SaleForm";
 import "../Css/Form.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getUpdatedSales } from "../utils/sale.utils";
+import { editSales, updateSaleItems } from "../actions/saleAction";
 
 export const Sale = () => {
   const [showSaleForm, setShowSaleForm] = useState(false);
   const saleItemList = useSelector((state) => state.saleState.saleItems);
 
-  console.log(saleItemList);
-
   const dispatch = useDispatch();
+
+  const handleEditSale = (item) => {
+    setShowSaleForm(true);
+    dispatch(editSales(true));
+    dispatch(updateSaleItems(item));
+  };
 
   return (
     <>
@@ -44,7 +49,10 @@ export const Sale = () => {
 
                   <td>
                     <div className="tableBtn">
-                      <span className="material-symbols-outlined">
+                      <span
+                        className="material-symbols-outlined"
+                        onClick={() => handleEditSale(item)}
+                      >
                         edit_note
                       </span>
                       <span

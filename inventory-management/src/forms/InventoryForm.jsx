@@ -1,13 +1,24 @@
 import { useDispatch, useSelector } from "react-redux";
 import "../Css/Form.css";
-import { updateInventoryItems } from "../actions/inventoryAction";
+import {
+  editInventory,
+  updateInventoryItems,
+} from "../actions/inventoryAction";
 import { addItemToInventory } from "../services/inventory.services";
-import { getInventoryItems } from "../utils/inventory.utils";
+import {
+  getInventoryItems,
+  updateEditedInventoryItems,
+} from "../utils/inventory.utils";
 
 export const InventoryForm = ({ setShowInventoryForm }) => {
   const inventoryInput = useSelector(
     (state) => state.inventoryState.inventoryInput
   );
+
+  const editInventoryItems = useSelector(
+    (state) => state.inventoryState.editInventoryItems
+  );
+
   const dispatch = useDispatch();
 
   const handleInventoryInput = (e) => {
@@ -18,21 +29,37 @@ export const InventoryForm = ({ setShowInventoryForm }) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const submit = await addItemToInventory(inventoryInput);
-      if (submit) {
-        getInventoryItems(dispatch);
-        dispatch(
-          updateInventoryItems({
-            name: "",
-            quantity: "",
-            price: "",
-          })
-        );
-        setShowInventoryForm(false);
+      if (editInventoryItems) {
+        updateEditedInventoryItems(dispatch, inventoryInput);
+      } else {
+        const submit = await addItemToInventory(inventoryInput);
+        if (submit) {
+          getInventoryItems(dispatch);
+        }
       }
+      setShowInventoryForm(false);
+      dispatch(
+        updateInventoryItems({
+          name: "",
+          quantity: "",
+          price: "",
+        })
+      );
     } catch (error) {
       throw new Error(`${error.message}`);
     }
+  };
+
+  const closeModal = () => {
+    setShowInventoryForm(false);
+    dispatch(editInventory(false));
+    dispatch(
+      updateInventoryItems({
+        name: "",
+        quantity: "",
+        price: "",
+      })
+    );
   };
 
   return (
@@ -52,6 +79,8 @@ export const InventoryForm = ({ setShowInventoryForm }) => {
           <label htmlFor="quantity">Quantity</label>
           <input
             type="number"
+            min="0"
+            // onInput="this.value = Math.abs(this.value)"
             id="quantity"
             placeholder="Add Quantity"
             value={inventoryInput?.quantity}
@@ -61,6 +90,8 @@ export const InventoryForm = ({ setShowInventoryForm }) => {
           <label htmlFor="price">Price</label>
           <input
             type="number"
+            min="0"
+            // onInput="this.value = Math.abs(this.value)"
             id="price"
             placeholder="Enter price"
             value={inventoryInput?.price}
@@ -68,13 +99,9 @@ export const InventoryForm = ({ setShowInventoryForm }) => {
             onChange={handleInventoryInput}
           />
           <button type="submit" className="submitBtn">
-            Submit
+            {editInventoryItems ? "Edit" : "Add"}
           </button>
-          <button
-            type="button"
-            className="closebtn"
-            onClick={() => setShowInventoryForm(false)}
-          >
+          <button type="button" className="closebtn" onClick={closeModal}>
             Close
           </button>
         </form>
