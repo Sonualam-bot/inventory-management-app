@@ -1,0 +1,36 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+:root{
+  --primary-color: #a855f7;
+  --btn-color: #c084fc;
+  --danger-color: #ef4444;
+}
+
+
+.home-container{
+  display: flex;
+  /* gap: 2rem; */
+  justify-content: space-around;
+  height: 90vh;
+}
+
+.route{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 90vw;
+  margin-top: 1rem;
+  /* background-color: red; */
+}
+
+.navContainer{
+  margin: 0 auto;
+  width: 200px;
+  /* text-align: center; */
+}
