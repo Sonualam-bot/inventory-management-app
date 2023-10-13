@@ -7,6 +7,7 @@
 
 :root{
   --primary-color: #a855f7;
+  --secondary-color: #a78bfa;
   --btn-color: #c084fc;
   --danger-color: #ef4444;
 }
@@ -14,9 +15,9 @@
 
 .home-container{
   display: flex;
-  /* gap: 2rem; */
-  justify-content: space-around;
+  gap: 1.5rem;
   height: 90vh;
+  width: 100vw;
 }
 
 .route{
@@ -24,13 +25,14 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 90vw;
-  margin-top: 1rem;
-  /* background-color: red; */
+  width: 80%;
+  height: 100%;
 }
 
 .navContainer{
-  margin: 0 auto;
-  width: 200px;
-  /* text-align: center; */
+  /* margin: 0 auto; */
+  /* border-right: 2px solid #818cf8; */
+  width: 15%;
+  background-color: var(--primary-color);
+
 }

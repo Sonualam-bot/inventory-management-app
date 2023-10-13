@@ -4,9 +4,8 @@
     /* gap: 1rem; */
     justify-content: flex-start;
     align-items: flex-start;
-    margin-top: 2rem;
-    border-right: 1px solid #818cf8;
-    height: 85vh;
+    /* padding: 2rem; */
+     height: 100%;
     width: 100%;
 }
 
@@ -17,13 +16,13 @@
     padding: .5rem;
     width: 100%;
     border-radius: 10px;
-    color: #3f3f46;
+    color: #fff;
 
 }
 
 .navlink:hover{
     padding: .5rem;
-    background-color: #818cf8;
+    background-color: #a78bfa;
     border-radius: 10px;
     color: #fff;
 }

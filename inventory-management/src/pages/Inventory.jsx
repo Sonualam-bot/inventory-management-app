@@ -1,18 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import { InventoryForm } from "../forms/InventoryForm";
-
 import "../Css/Form.css";
-import { useState } from "react";
 import { getUpdatedInventoryItems } from "../utils/inventory.utils";
 import {
   editInventory,
+  setInventoryItems,
   updateInventoryItems,
 } from "../actions/inventoryAction";
-
-//react icons
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import { useState } from "react";
 
 export const Inventory = () => {
   const [showInventoryForm, setShowInventoryForm] = useState(false);
+
   const inventoryItemList = useSelector(
     (state) => state.inventoryState.inventoryItems
   );
@@ -25,26 +26,60 @@ export const Inventory = () => {
     dispatch(updateInventoryItems(item));
   };
 
+  const handleSortByName = () => {
+    console.log("here");
+    const sortedItems = [...inventoryItemList].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+    dispatch(setInventoryItems(sortedItems));
+  };
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+    const columns = ["Sn. No.", "Name", "Price", "Quantity", "Total Price"];
+    const data = inventoryItemList.map((item, index) => [
+      index + 1,
+      item.name,
+      item.price,
+      item.quantity,
+      item.price * item.quantity,
+    ]);
+
+    doc.autoTable({
+      head: [columns],
+      body: data,
+    });
+
+    doc.save("inventory.pdf");
+  };
+
   return (
     <>
-      <button
-        className="commonBtn"
-        onClick={() => setShowInventoryForm(!showInventoryForm)}
-      >
-        Add Items To Inventory
-      </button>
+      <div className="inventoryBTnTop">
+        <button
+          className="commonBtn"
+          onClick={() => setShowInventoryForm(!showInventoryForm)}
+        >
+          Add Items To Inventory
+        </button>
+
+        <button className="commonBtn" onClick={generatePDF}>
+          Print Inventory Report
+        </button>
+      </div>
 
       {showInventoryForm && (
         <InventoryForm setShowInventoryForm={setShowInventoryForm} />
       )}
 
-      <div>
+      <div className="tableData">
         <table>
           <thead>
             <tr>
               <th>Sn. No.</th>
-              <th>Name</th>
-              <th>Price </th>
+              <th onClick={handleSortByName}>Name</th>
+              <th>Price</th>
               <th>Quantity</th>
               <th>Total Price</th>
               <th>Update</th>

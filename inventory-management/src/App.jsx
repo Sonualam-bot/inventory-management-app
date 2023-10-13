@@ -10,6 +10,7 @@ import { getInventoryItems } from "./utils/inventory.utils";
 
 import { useDispatch } from "react-redux";
 import { getAllRecordedSales } from "./utils/sale.utils";
+// import { Footer } from "./pages/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function App() {
           </Routes>
         </div>
       </div>
+      {/* <Footer /> */}
     </>
   );
 }
