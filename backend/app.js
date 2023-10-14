@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 });
 
 const corsOptions = {
-  origin: "https://inventory-management-app-dun.vercel.app",
+  origin: "*",
 };
 
 app.use(cors(corsOptions));
