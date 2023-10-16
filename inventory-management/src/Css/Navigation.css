@@ -11,8 +11,7 @@
 }
 
 .nav-child{
-    margin: 0 auto;
-    
+    margin: 0 auto;   
 }
 
 .nav-child > div{  
@@ -38,4 +37,8 @@
     border-radius: 10px;
     width: 250px;
     color: #fff;
+}
+
+.github {
+    font-size: 2.4rem;
 }

@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom";
 import "../Css/Navigation.css";
 
+// icons
+import { AiFillGithub } from "react-icons/ai";
+
 export const NavigationLeft = () => {
   return (
     <>
@@ -19,6 +22,15 @@ export const NavigationLeft = () => {
           <div>
             <NavLink className="navlink" to="/sale">
               Sale
+            </NavLink>
+          </div>
+          <div>
+            <NavLink
+              className="navlink"
+              to="https://github.com/Sonualam-bot/inventory-management-app"
+              target="_blank"
+            >
+              <AiFillGithub className="github" />
             </NavLink>
           </div>
         </div>
