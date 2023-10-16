@@ -14,7 +14,23 @@ const inventorySchema = new mongoose.Schema(
       type: Number,
       required: [true, "Item price is required"],
     },
+    category: {
+      type: String,
+      enum: [
+        "Electronics",
+        "Clothing",
+        "Furniture",
+        "Home Appliances",
+        "Sports Equipment",
+        "Books",
+        "Toys",
+        "Health & Beauty",
+        "Jewelry",
+        "Food & Beverages",
+      ],
+    },
   },
+
   {
     timestamps: true,
   }

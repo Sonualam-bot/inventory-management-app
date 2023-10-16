@@ -153,11 +153,15 @@ input {
 
   /* sale form top btns starts here */
   .saleBtnsTop, .inventoryBTnTop{
-    width: 65%;
+    /* width: 65%; */
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+  }
+
+  .search{
+    margin: 0;
   }
 
   .parent{
@@ -175,3 +179,20 @@ input {
 
 
   /* sale form top btns ends here */
+
+
+  fieldset{
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+
+  }
+
+  fieldset > span:hover{
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  

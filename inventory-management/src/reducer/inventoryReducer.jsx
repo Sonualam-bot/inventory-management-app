@@ -4,6 +4,7 @@ const initialState = {
     name: "",
     quantity: "",
     price: "",
+    category: "",
   },
   editInventoryItems: false,
 };

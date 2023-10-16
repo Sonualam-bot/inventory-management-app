@@ -23,6 +23,7 @@ export const InventoryForm = ({ setShowInventoryForm }) => {
 
   const handleInventoryInput = (e) => {
     const { name, value } = e.target;
+    console.log({ ...inventoryInput, [name]: value });
     dispatch(updateInventoryItems({ ...inventoryInput, [name]: value }));
   };
 
@@ -43,6 +44,7 @@ export const InventoryForm = ({ setShowInventoryForm }) => {
           name: "",
           quantity: "",
           price: "",
+          category: "",
         })
       );
     } catch (error) {
@@ -58,9 +60,23 @@ export const InventoryForm = ({ setShowInventoryForm }) => {
         name: "",
         quantity: "",
         price: "",
+        category: "",
       })
     );
   };
+
+  const inventoryCategories = [
+    "Electronics",
+    "Clothing",
+    "Furniture",
+    "Home Appliances",
+    "Sports Equipment",
+    "Books",
+    "Toys",
+    "Health & Beauty",
+    "Jewelry",
+    "Food & Beverages",
+  ];
 
   return (
     <div className="modal-overlay">
@@ -98,6 +114,21 @@ export const InventoryForm = ({ setShowInventoryForm }) => {
             name="price"
             onChange={handleInventoryInput}
           />
+          <select
+            name="category"
+            value={inventoryInput?.category}
+            onChange={handleInventoryInput}
+          >
+            <option value="">Select Category</option>
+            {inventoryCategories?.map((category) => {
+              return (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              );
+            })}
+          </select>
+
           <button type="submit" className="submitBtn">
             {editInventoryItems ? "Edit" : "Add"}
           </button>
