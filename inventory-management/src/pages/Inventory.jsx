@@ -10,6 +10,7 @@ import {
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { useState } from "react";
+import { getDate } from "../component/Date";
 
 export const Inventory = () => {
   const [showInventoryForm, setShowInventoryForm] = useState(false);
@@ -56,69 +57,73 @@ export const Inventory = () => {
 
   return (
     <>
-      <div className="inventoryBTnTop">
-        <button
-          className="commonBtn"
-          onClick={() => setShowInventoryForm(!showInventoryForm)}
-        >
-          Add Items To Inventory
-        </button>
+      <div className="parent">
+        <div className="inventoryBTnTop">
+          <button
+            className="commonBtn"
+            onClick={() => setShowInventoryForm(!showInventoryForm)}
+          >
+            Add Items To Inventory
+          </button>
 
-        <button className="commonBtn" onClick={generatePDF}>
-          Print Inventory Report
-        </button>
-      </div>
+          <button className="commonBtn" onClick={generatePDF}>
+            Print Inventory Report
+          </button>
+        </div>
 
-      {showInventoryForm && (
-        <InventoryForm setShowInventoryForm={setShowInventoryForm} />
-      )}
+        {showInventoryForm && (
+          <InventoryForm setShowInventoryForm={setShowInventoryForm} />
+        )}
 
-      <div className="tableData">
-        <table>
-          <thead>
-            <tr>
-              <th>Sn. No.</th>
-              <th onClick={handleSortByName}>Name</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Total Price</th>
-              <th>Update</th>
-            </tr>
-          </thead>
-          <tbody>
-            {inventoryItemList?.map((item, index) => {
-              const totalPrice = item.price * item.quantity;
+        <div className="tableData">
+          <table>
+            <thead>
+              <tr>
+                <th>Sn. No.</th>
+                <th onClick={handleSortByName}>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Date</th>
+                <th>Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              {inventoryItemList?.map((item, index) => {
+                const totalPrice = item.price * item.quantity;
 
-              return (
-                <tr key={item._id}>
-                  <td>{index + 1}</td>
-                  <td>{item.name}</td>
-                  <td>{item.price}</td>
-                  <td>{item.quantity}</td>
-                  <td>{totalPrice}</td>
-                  <td>
-                    <div className="tableBtn">
-                      <span
-                        className="material-symbols-outlined"
-                        onClick={() => handleEditInventory(item)}
-                      >
-                        edit_note
-                      </span>
-                      <span
-                        className="material-symbols-outlined"
-                        onClick={() =>
-                          getUpdatedInventoryItems(dispatch, item._id)
-                        }
-                      >
-                        delete
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                return (
+                  <tr key={item._id}>
+                    <td>{index + 1}</td>
+                    <td>{item.name}</td>
+                    <td>{item.price}</td>
+                    <td>{item.quantity}</td>
+                    <td>{totalPrice}</td>
+                    <td>{getDate(item.createdAt)}</td>
+                    <td>
+                      <div className="tableBtn">
+                        <span
+                          className="material-symbols-outlined"
+                          onClick={() => handleEditInventory(item)}
+                        >
+                          edit_note
+                        </span>
+                        <span
+                          className="material-symbols-outlined"
+                          onClick={() =>
+                            getUpdatedInventoryItems(dispatch, item._id)
+                          }
+                        >
+                          delete
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

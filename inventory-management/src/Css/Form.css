@@ -122,7 +122,7 @@ input {
   /* inventoryTable starts here */
 
 .tableData{
-  width: 100%;
+  width: 75%;
 }
 
   table {
@@ -153,11 +153,16 @@ input {
 
   /* sale form top btns starts here */
   .saleBtnsTop, .inventoryBTnTop{
-    /* width: 65%; */
+    width: 65%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+  }
+
+  .parent{
+    margin: 0 auto;
+    width: 700px;
   }
 
   /* .inventoryBTnTop{
